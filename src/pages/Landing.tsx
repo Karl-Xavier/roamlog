@@ -1,4 +1,3 @@
-import React from 'react'
 import LandingContent from '../component/Landing/LandingContent'
 
 export default function Landing() {
