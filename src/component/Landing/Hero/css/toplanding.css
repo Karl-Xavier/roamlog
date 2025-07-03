@@ -1,0 +1,10 @@
+.hero-section-intro::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../../../../assets/Travel images/photo-7.jpg');
+  background-size: cover;
+  filter: blur(2px) brightness(0.9);
+  transform: scale(1.05);
+  z-index: 0;
+}
