@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './css/homecontent.css'
 import { homeData } from '../../utils/homeData'
 import { Link } from 'react-router-dom';
