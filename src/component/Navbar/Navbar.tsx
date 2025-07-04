@@ -17,7 +17,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className={`${isLanding ? 'navigation-land' : 'navigation'} px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%]`}>
+    <header className={`${isLanding ? 'navigation-land' : 'navigation'} px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%]`}>
       <div className="main-nav w-full flex flex-row justify-between items-center">
         <section className="title-list flex flex-row justify-between items-center">
           {!isLanding && <button className='md:hidden cursor-pointer outline-none'><List size={22} weight='fill'/></button>}
@@ -50,6 +50,6 @@ export default function Navbar() {
           <button className='text-[20px] font-bold cursor-pointer outline-none uppercase underline'>Login</button>
         </Link>}
       </div>
-    </div>
+    </header>
   )
 }
