@@ -22,7 +22,7 @@ export default function Navbar() {
         <section className="title-list flex flex-row justify-between items-center">
           {!isLanding && <button className='md:hidden cursor-pointer outline-none'><List size={22} weight='fill'/></button>}
           <Link to={isLanding ? '/' : '/home'} className=''>
-            <img src="/brand_name.png" alt="Brand Logo" className='brand-name w-[220px] h-[100px] object-fill' />
+            <img src="/brand_name.png" alt="Brand Logo" className='brand-name w-[170px] md:w-[220px] h-[100px] object-fill' />
           </Link>
         </section>
         {!isLanding && <nav className="nav-item md:w-[60%] lg:w-[50%]">
@@ -46,8 +46,8 @@ export default function Navbar() {
             </Link>
           </ul>
         </nav>}
-        {isLanding && <Link to='/register'>
-          <button className='text-[20px] font-medium cursor-pointer outline-none uppercase underline'>Login</button>
+        {isLanding && <Link to='/register' className='w-1/4 md:w-max'>
+          <button className='text-[20px] font-bold cursor-pointer outline-none uppercase underline'>Login</button>
         </Link>}
       </div>
     </div>

@@ -1,3 +1,4 @@
+import LastSection from "./Hero/LastSection";
 import MiddleSection from "./Hero/MiddleSection";
 import SecondMiddle from "./Hero/SecondMiddle";
 import TopSection from "./Hero/TopSection";
@@ -9,6 +10,7 @@ export default function LandingContent() {
       <TopSection/>
       <MiddleSection/>
       <SecondMiddle/>
+      <LastSection/>
     </div>
   )
 }
