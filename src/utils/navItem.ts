@@ -1,4 +1,4 @@
-import { House, Info, Image, type IconProps, PlusCircle } from 'phosphor-react'
+import { House, Info, SquaresFour, type IconProps, PlusCircle } from 'phosphor-react'
 
 type MenuItem = {
   name: string;
@@ -15,7 +15,7 @@ export const navItem: MenuItem[] = [
   { 
     name: 'Gallery', 
     route: '/gallery', 
-    icon: Image
+    icon: SquaresFour
   },
   { 
     name: 'About', 
@@ -24,7 +24,7 @@ export const navItem: MenuItem[] = [
   },
   {
     name: 'Create',
-    route: '/new_memories',
+    route: '/new-memories',
     icon: PlusCircle
   }
 ]

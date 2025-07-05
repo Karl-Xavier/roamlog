@@ -1,0 +1,28 @@
+.left-section label span.label-span{
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.left-section label{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.left-section label input{
+  padding: 5px;
+  outline: none;
+  border: 1px solid #4c6f59;
+  border-radius: 7px;
+  font-weight: 500;
+}
+
+.left-section label textarea{
+  outline: none;
+  border: 1px solid #4c6f59;
+  min-height: 250px;
+  border-radius: 7px;
+  padding: 5px;
+}

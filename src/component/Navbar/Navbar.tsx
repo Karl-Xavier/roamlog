@@ -10,12 +10,6 @@ export default function Navbar() {
 
   const isLanding = location.pathname === '/'
 
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  function findCurrentIndex(index: number){
-    setCurrentIndex(index)
-  }
-
   return (
     <header className={`${isLanding ? 'navigation-land' : 'navigation'} px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%]`}>
       <div className="main-nav w-full flex flex-row justify-between items-center">
@@ -32,8 +26,8 @@ export default function Navbar() {
               const Icon = item.icon
 
               return(
-              <Link to={item.route} key={index} className='hidden md:block nav-link relative' onClick={() => findCurrentIndex(index)}>
-                <li className={`list flex flex-row justify-between items-center gap-[2px] ${currentIndex === index ? 'active' : ''}`}>
+              <Link to={item.route} key={index} className='hidden md:block nav-link relative'>
+                <li className={`list flex flex-row justify-between items-center gap-[2px] ${location.pathname === item.route ? 'active' : ''}`}>
                   <span className='nav-item-name'>{item.name}</span>
                   <span className='nav-item-icon'><Icon size={20} weight='fill'/></span>
                 </li>
