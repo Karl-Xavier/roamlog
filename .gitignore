@@ -26,5 +26,3 @@ build
 *.sln
 *.sw?
 .env*
-vercel.json
-vercel

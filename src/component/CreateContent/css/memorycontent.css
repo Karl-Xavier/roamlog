@@ -26,3 +26,13 @@
   border-radius: 7px;
   padding: 5px;
 }
+
+.left-section .cover-image{
+  border: 1px dotted #4c6f59;
+  border-radius: 10px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,8 +1,9 @@
-import { useState } from 'react'
 import { navItem } from '../../utils/navItem'
 import { Link, useLocation } from 'react-router-dom'
 import './css/navbar.css'
 import { List } from 'phosphor-react'
+import SideNav from './SideNav'
+import { useNav } from '../Store/navStore'
 
 export default function Navbar() {
 
@@ -10,12 +11,15 @@ export default function Navbar() {
 
   const isLanding = location.pathname === '/'
 
+  const { isOpen, openSideBar } = useNav()
+
   return (
-    <header className={`${isLanding ? 'navigation-land' : 'navigation'} px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%]`}>
+    <header className={`${isLanding ? 'navigation-land' : 'navigation'} px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%] relative`}>
       <div className="main-nav w-full flex flex-row justify-between items-center">
+        {isOpen && <SideNav/>}
         <section className="title-list flex flex-row justify-between items-center">
-          {!isLanding && <button className='md:hidden cursor-pointer outline-none'><List size={22} weight='fill'/></button>}
-          <Link to={isLanding ? '/' : '/home'} className=''>
+          {!isLanding && <button className='md:hidden cursor-pointer outline-none' onClick={openSideBar}><List size={24} weight='bold'/></button>}
+          <Link to={'/'} className={`${!isLanding ? 'hidden md:block' : ''}`}>
             <img src="/brand_name.png" alt="Brand Logo" className='brand-name w-[170px] md:w-[220px] h-[100px] object-fill' />
           </Link>
         </section>
