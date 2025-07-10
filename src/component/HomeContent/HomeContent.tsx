@@ -3,7 +3,7 @@ import { homeData } from '../../utils/homeData'
 import { Link } from 'react-router-dom';
 
 type HomeData = {
-  imgURL: string;
+  cover: string;
   title: string;
   id: number | string;
   description: string;
@@ -22,7 +22,7 @@ export default function HomeContent() {
           <div className="spiral"></div>
           <div className="content">
             <div className="top-content h-[60%] w-full pl-[5px]">
-              <img src={data.imgURL} alt={data.title} className='h-full w-full'/>
+              <img src={data.cover} alt={data.title} className='h-full w-full'/>
             </div>
             <div className="text-content my-2 p-[10px]">
               <h2 className='memory-title text-[18px]'>{data.title}</h2>

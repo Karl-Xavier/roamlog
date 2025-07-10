@@ -22,6 +22,7 @@
 .App{
   background: #f8f2e6;
   color: #4c6f59;
+  min-height: 100vh;
 }
 
 .navigation{

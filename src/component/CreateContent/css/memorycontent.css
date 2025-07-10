@@ -19,6 +19,14 @@
   font-weight: 500;
 }
 
+.left-section label input.command-input {
+  border: none;
+  padding: 0;
+  outline: none;
+  border-radius: 0;
+  font-weight: 500;
+}
+
 .left-section label textarea{
   outline: none;
   border: 1px solid #4c6f59;
@@ -28,7 +36,6 @@
 }
 
 .left-section .cover-image{
-  border: 1px dotted #4c6f59;
   border-radius: 10px;
   height: 150px;
   display: flex;
