@@ -27,7 +27,7 @@ export default function AlbumContent() {
 
   return (
     <div className="w-full px-[10px] md:px-[10%]">
-      <form className="bg-[#fffff0] p-[20px] w-full grid grid-cols-1 md:grid-cols-2" onSubmit={handleSubmit}>
+      <form className="bg-[#fffff0] p-[20px] w-full grid grid-cols-1 lg:grid-cols-2" onSubmit={handleSubmit}>
         <LeftAlbumSection formData={formData} inputValue={inputValue} setInputValue={setInputValue} setFormData={setFormData}/>
         <RightAlbumSection formData={formData} setFormData={setFormData}/>
         <button className="w-[220px] h-[44px] uppercase rounded-[10px] bg-[#4c6f59] text-[#eee] cursor-pointer outline-none mt-[10px]">Create</button>

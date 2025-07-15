@@ -4,6 +4,7 @@ import './css/navbar.css'
 import { List } from 'phosphor-react'
 import SideNav from './SideNav'
 import { useNav } from '../Store/navStore'
+import { authContext } from '../Store/authContext'
 
 export default function Navbar() {
 
@@ -12,6 +13,7 @@ export default function Navbar() {
   const isLanding = location.pathname === '/'
 
   const { isOpen, openSideBar } = useNav()
+  const { isAuthenticated } = authContext()
 
   return (
     <header className={`${isLanding ? 'navigation-land' : 'navigation'} px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%] relative`}>
@@ -23,7 +25,7 @@ export default function Navbar() {
             <img src="/brand_name.png" alt="Brand Logo" className='brand-name w-[170px] md:w-[220px] h-[100px] object-fill' />
           </Link>
         </section>
-        {!isLanding && <nav className="nav-item md:w-[60%] lg:w-[50%]">
+        {isAuthenticated && <nav className="nav-item md:w-[60%] lg:w-[50%]">
           <ul className="nav-item-list w-full h-auto m-0 p-0 flex flex-row justify-between items-center">
             {navItem.map((item, index) => {
 
@@ -44,7 +46,7 @@ export default function Navbar() {
             </Link>
           </ul>
         </nav>}
-        {isLanding && <Link to='/register' className='w-1/4 md:w-max'>
+        {!isAuthenticated && <Link to='/login' className=' md:w-max'>
           <button className='text-[20px] font-bold cursor-pointer outline-none uppercase underline'>Login</button>
         </Link>}
       </div>

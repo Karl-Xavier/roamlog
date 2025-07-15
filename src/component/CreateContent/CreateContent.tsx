@@ -12,7 +12,7 @@ export default function CreateContent() {
 
   return (
     <div className="w-full h-full relative">
-      <section className="upper-section px-[10px] md:px-[60px]">
+      <section className="upper-section px-[10px] md:px-[5%] lg:px-[10%]">
         {isSelected !== '' && (
           <div className="w-full flex flex-row justify-end">
             <Link to={isSelected === 'memory' ? '/new-memories/memory' : '/new-memories/album'} className="">

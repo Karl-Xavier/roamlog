@@ -3,6 +3,7 @@ import { homeData, type HomeData } from "../../utils/homeData";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import CarouselContainer from "./component/Carousel";
+import MapContain from "./component/MapContainer";
 
 interface MemoriesProp {
   cover: '';
@@ -34,7 +35,7 @@ export default function MemoriesIdComponent() {
   return (
     <div className="container px-[20px] md:px-[10%] mb-[40px]">
       <Head title={`${memories?.title} a memory by ${memories?.author}`} description={memories?.description} image={memories?.cover} keywords={memories?.tags}/>
-      <section className="w-full h-auto grid grid-cols-1 md:grid-cols-[60%_1fr] gap-[15px]">
+      <section className="w-full h-auto grid grid-cols-1 lg:grid-cols-[60%_1fr] gap-[15px]">
         <div className="main-section w-full">
           <div className="tags flex flex-row items-center gap-[10px] mb-[20px]">
             {memories?.tags.map((tag, index) => (
@@ -53,9 +54,8 @@ export default function MemoriesIdComponent() {
           </div>
         </div>
         <div className="div map-carousel w-full">
-            <div className="map-div w-full">
-              <div className="w-full h-[200px] md:h-[300px] bg-[#121212]"></div>
-              <span className="location-indictor text-right text-[12px] italic font-bold text-[#121212]">Travel Location</span>
+            <div className="map-div w-full h-[300px]">
+              <MapContain lat={9.0643305} lon={7.4892974}/>
             </div>
             <div className="relative w-full mt-[20px]">
               <h2 className="font-bold">Travel Images</h2>

@@ -36,6 +36,8 @@ const Head: React.FC<HeadProps> = ({ title, description, image, keywords }) => {
 
     if(description){
       setMetaTag('meta[name="description"]', 'content', description)
+    }else {
+      setMetaTag('meta[name="description"]', 'content', 'Document your travel experiences and journey, Share them with friends and get engagement')
     }
 
     if(keywords && keywords.length > 0){

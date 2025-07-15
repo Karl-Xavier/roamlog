@@ -2,10 +2,13 @@ import { navItem } from "../../utils/navItem"
 import { X } from 'phosphor-react'
 import { Link } from 'react-router-dom'
 import { useNav } from "../Store/navStore"
+import { authContext } from "../Store/authContext"
 
 export default function SideNav() {
 
   const closeSideBar = useNav((state) => state.closeSideBar)
+
+  const { isAuthenticated } = authContext()
 
   return (
     <div className="fixed top-0 left-0 w-full h-screen overflow-hidden bg-[#fffff0] z-[999]">
@@ -20,7 +23,7 @@ export default function SideNav() {
 
           return (
             <Link to={item.route} key={index} onClick={closeSideBar}>
-              <li className="flex flex-row justify-between items-center mb-[30px] pb-[5px] px-[20px] border-b-[1px]">
+              <li className={`${!isAuthenticated && item.showOnAuth === false ? 'hidden' : ''} flex flex-row justify-between items-center mb-[30px] pb-[5px] px-[20px] border-b-[1px]`}>
                 <span>{item.name}</span>
                 <span><Icon size={24} weight='fill'/></span>
               </li>
