@@ -1,16 +1,19 @@
 import { CheckCircle, Eye, EyeClosed, Plus } from "phosphor-react";
 import React, { useState } from "react";
 import { type UserInterface } from "@/utils/userInterface";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerAccount } from "@/service/authForm";
 import Toast from "@/component/Toast/Toast";
+import { ClipLoader } from "react-spinners";
 
-interface ToastInterface {
+export interface ToastInterface {
   message: null | string;
   type: string;
 }
 
 export default function FormBox() {
+
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState<UserInterface>({
     firstName: '',
@@ -24,6 +27,7 @@ export default function FormBox() {
     message: null,
     type: ''
   })
+  const [loading, setLoading] = useState(false)
 
   function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>){
     const { name, value } = e.target
@@ -61,14 +65,15 @@ export default function FormBox() {
   async function handleSubmitForm(e: React.ChangeEvent<HTMLFormElement>){
     e.preventDefault()
     
+    setLoading(true)
     const info = await registerAccount(formData)
+    setLoading(false)
 
     if(info?.error){
       setToast({ message: info.error, type: 'error' })
-
-      console.log(info.error)
     }else {
       setToast({ message: info.message as string, type: 'success' })
+      navigate('/home')
     }
   }
 
@@ -100,7 +105,7 @@ export default function FormBox() {
             )}
           </div>
         </label>
-        <button className="my-[10px] cursor-pointer outline-none rounded bg-[#4c6f59] text-[#eee] w-[120px] h-[40px]">Register</button>
+        <button className="my-[10px] cursor-pointer outline-none rounded bg-[#4c6f59] text-[#eee] w-[120px] h-[40px] flex justify-center items-center" disabled={loading}>{loading ? <ClipLoader color="#eee" size={24}/> : 'Register'}</button>
       </form>
       <p>Already Have an Account? <Link to={'/login'} className="font-bold">Login</Link></p>
       {toast.message !== null && <Toast message={toast.message} type={toast.type} onClose={() => setToast({ message: null, type: '' })}/>}

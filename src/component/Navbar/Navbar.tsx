@@ -5,6 +5,7 @@ import { List } from 'phosphor-react'
 import SideNav from './SideNav'
 import { useNav } from '../Store/navStore'
 import { authContext } from '../Store/authContext'
+import avatar from '../../assets/avatar.jpg'
 
 export default function Navbar() {
 
@@ -13,10 +14,10 @@ export default function Navbar() {
   const isLanding = location.pathname === '/'
 
   const { isOpen, openSideBar } = useNav()
-  const { isAuthenticated } = authContext()
+  const { isAuthenticated, user} = authContext()
 
   return (
-    <header className={`${isLanding ? 'navigation-land' : 'navigation'} px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%] relative`}>
+    <header className='px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%] relative'>
       <div className="main-nav w-full flex flex-row justify-between items-center">
         {isOpen && <SideNav/>}
         <section className="title-list flex flex-row justify-between items-center">
@@ -41,7 +42,7 @@ export default function Navbar() {
             )})}
             <Link to={'/profile'}>
               <div className='w-[45px] h-[45px] rounded-[50%] bg-[#30382f] border-[#4c6f59] border-[2px]'>
-                <img src="/logo.ico" alt="profile picture" className='w-full h-full rounded-[50%]' />
+                <img src={isAuthenticated ? user?.profileImage : avatar} alt="profile picture" className='w-full h-full rounded-[50%]' />
               </div>
             </Link>
           </ul>

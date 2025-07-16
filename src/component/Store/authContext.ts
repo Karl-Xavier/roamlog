@@ -1,11 +1,13 @@
 import { create } from "zustand";
-import { type User, onAuthStateChanged } from 'firebase/auth'
-import { auth } from "@/config/firebaseConfig";
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth, db } from "@/config/firebaseConfig";
+import { doc, getDoc, type DocumentData } from "firebase/firestore";
 
 type AuthStore = {
-  user: null | User;
+  user: null | DocumentData;
   isAuthenticated: boolean;
   checkAuth: () => void;
+  userId: null | string
 }
 
 export const authContext = create<AuthStore>((set) => {
@@ -13,13 +15,25 @@ export const authContext = create<AuthStore>((set) => {
 
   const initialSState: AuthStore = {
     isAuthenticated: !!authInstance.currentUser,
-    user: authInstance.currentUser,
+    user: null,
+    userId: null,
     checkAuth: () => {
-      onAuthStateChanged(authInstance, (user) => {
+      onAuthStateChanged(authInstance, async (user) => {
         if(user) {
-          set({ isAuthenticated: true, user })
+          
+          const profileInfo = await getDoc(doc(db, 'users', user.uid))
+
+          if(profileInfo.exists()){
+
+            const data = profileInfo.data()
+
+            set({ isAuthenticated: true, user: data, userId: user.uid })
+          }else {
+            set({ isAuthenticated: false, user: null, userId: null })
+          }
+
         }else {
-          set({ isAuthenticated: false, user: null })
+          set({ isAuthenticated: false, user: null, userId: null })
         }
       })
     }

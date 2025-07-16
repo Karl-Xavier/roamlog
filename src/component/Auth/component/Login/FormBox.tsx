@@ -1,9 +1,15 @@
 import { type LoginInterface } from "@/utils/userInterface";
 import { Eye, EyeClosed } from "phosphor-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import type { ToastInterface } from "../Register/FormBox";
+import { loginWithFirebase } from "@/service/authForm";
+import Toast from "@/component/Toast/Toast";
+import { ClipLoader } from 'react-spinners'
 
 export default function FormBox() {
+
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState<LoginInterface>({
     email: '',
@@ -11,6 +17,11 @@ export default function FormBox() {
   })
 
   const [isVisible, setIsVisible] = useState(false)
+  const [toast, setToast] = useState<ToastInterface>({
+    message: null,
+    type: ''
+  })
+  const [loading, setLoading] = useState(false)
 
   function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>){
     const { name, value } = e.target
@@ -22,8 +33,20 @@ export default function FormBox() {
     setIsVisible(!isVisible)
   }
 
-  function handleSubmitForm(e: React.ChangeEvent<HTMLFormElement>){
+  async function handleSubmitForm(e: React.ChangeEvent<HTMLFormElement>){
     e.preventDefault()
+
+    setLoading(true)
+    const info = await loginWithFirebase(formData)
+    setLoading(false)
+
+    if(info.error){
+      setToast({ message: info.error, type: 'error' })
+    }else {
+      setToast({ message: info.message as string, type: 'success' })
+      navigate('/home')
+    }
+
   }
 
   return (
@@ -36,9 +59,10 @@ export default function FormBox() {
           <input type={isVisible ? 'text' : 'password'} name="password" id="password" placeholder="Password" className="" onChange={handleChangeInput} value={formData.password}/>
           <button className="outline-none cursor-pointer" type="button" onClick={togglePassword}>{isVisible ? <Eye size={22}/> : <EyeClosed size={22}/>}</button>
         </div>
-        <button className="my-[10px] cursor-pointer outline-none rounded bg-[#4c6f59] text-[#eee] w-[120px] h-[40px]">Login</button>
+        <button className="my-[10px] cursor-pointer outline-none rounded bg-[#4c6f59] text-[#eee] w-[120px] h-[40px] flex justify-center items-center" disabled={loading}>{loading ? <ClipLoader color="#eee" size={24}/> : 'Login'}</button>
       </form>
       <p>Don't Have an Account? <Link to={'/register'} className="font-bold">Register</Link></p>
+      {toast.message && <Toast message={toast.message} type={toast.type} onClose={() => setToast({ message: null, type: '' })}/>}
     </div>
   )
 }

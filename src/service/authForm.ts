@@ -1,7 +1,13 @@
 import { auth, db } from "@/config/firebaseConfig";
-import type { UserInterface } from "@/utils/userInterface";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import type { LoginInterface, UserInterface } from "@/utils/userInterface";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from 'firebase/firestore'
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  const passwordRegex = /^(?!.*(12345678|password|qwerty|letmein|123123)).{8,}$/
+
+  const isEmailValid = (email: string) => emailRegex.test(email)
+  const isPasswordValid = (password: string) => passwordRegex.test(password)
 
 export const registerAccount = async (formData: UserInterface) => {
 
@@ -22,12 +28,6 @@ export const registerAccount = async (formData: UserInterface) => {
       }
     }
   }
-
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-  const passwordRegex = /^(?!.*(12345678|password|qwerty|letmein|123123)).{8,}$/
-
-  const isEmailValid = (email: string) => emailRegex.test(email)
-  const isPasswordValid = (password: string) => passwordRegex.test(password)
 
   if(!isEmailValid(formData.email) || formData.email === ''){
     return {
@@ -61,11 +61,11 @@ export const registerAccount = async (formData: UserInterface) => {
       await setDoc(doc(db, 'users', user.uid), formData)
     }
 
+    
+
     return { message: 'Account Created' }
     
   } catch (err: any) {
-
-    console.log(err.code)
 
     let fireError: string
 
@@ -88,4 +88,52 @@ export const registerAccount = async (formData: UserInterface) => {
     // throw new Error(err)
   }
 
+}
+
+export const loginWithFirebase = async(formData: LoginInterface) => {
+
+  // Validate form 
+
+  if(formData.email === ''){
+    return {
+      error: 'Email is required',
+    }
+  }
+
+  if(formData.password === ''){
+    return {
+      error: 'Password is required',
+    }
+  }
+
+  try {
+    
+    const { email, password } = formData
+
+    await signInWithEmailAndPassword(auth, email, password)
+
+    return { message: 'Login Successful' }
+
+  } catch (err: any) {
+
+    let fireError: string
+
+    switch(err.code){
+      case 'auth/user-not-found':
+        fireError = 'No user Found'
+        break;
+      case 'auth/wrong-password':
+        fireError = 'Incorrect Password'
+        break;
+      case 'auth/network-request-failed':
+        fireError = 'Network Error';
+        break;
+      default:
+        fireError = 'Something went wrong'
+    }
+    
+    return {
+      error: fireError
+    }
+  }
 }
