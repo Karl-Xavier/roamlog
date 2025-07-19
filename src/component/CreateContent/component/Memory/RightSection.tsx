@@ -9,8 +9,8 @@ type RightSectionProp = {
 export default function RightSection({ handleImageChange, other_images, removeImage }: RightSectionProp) {
   return (
     <section className="right-section bg-[#fffff0] p-[20px] h-max">
-      <h3 className="text-[18px] font-bold">Add Travel Images (minimum of 1 image)</h3>
-      <label htmlFor="others" className="mt-[10px] cursor-pointer outline-none flex flex-row justify-evenly uppercase items-center w-[100px] h-[40px] bg-[#4c6f59] rounded-[7px] text-[#eee]">
+      <h3 className="text-[16px] font-bold">Add Travel Images (minimum of 1 image)</h3>
+      <label htmlFor="others" className="mt-[10px] cursor-pointer outline-none flex flex-row justify-evenly uppercase items-center w-[100px] h-[40px] bg-[#4c6f59] rounded-[7px] text-[#eee] text-[16px]">
       <input type="file" name="others" id="others" className="hidden" onChange={handleImageChange} multiple/>Add <Plus weight="bold"/>
       </label>
       <div className="images-section mt-[15px]">

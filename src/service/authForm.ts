@@ -116,6 +116,8 @@ export const loginWithFirebase = async(formData: LoginInterface) => {
 
   } catch (err: any) {
 
+    console.log(err.code, err)
+
     let fireError: string
 
     switch(err.code){

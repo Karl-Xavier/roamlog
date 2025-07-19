@@ -18,7 +18,7 @@ export default function Navbar() {
 
   return (
     <header className='px-[2%] md:py-[20px] md:px-[7%] lg:px-[10%] relative'>
-      <div className="main-nav w-full flex flex-row justify-between items-center">
+      <div className="main-nav w-full flex flex-row justify-between items-center py-[20px]">
         {isOpen && <SideNav/>}
         <section className="title-list flex flex-row justify-between items-center">
           {!isLanding && <button className='md:hidden cursor-pointer outline-none' onClick={openSideBar}><List size={24} weight='bold'/></button>}

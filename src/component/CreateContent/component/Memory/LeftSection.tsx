@@ -36,8 +36,8 @@ export default function LeftSection({ handleChange, formData, handleKeyDown, inp
     </label>
     <label htmlFor="description">
       <span className="label-span">Description</span>
-      <textarea name="description" id="description" className="w-full md:w-[80%]" onChange={handleChange} value={formData.description} minLength={250}></textarea>
-      <p className="text-[12px] italic w-full md:w-[80%] flex flex-row justify-between items-center"><span>min characters: 250</span> <span>current characters: {formData.description.length}</span></p>
+      <textarea name="description" id="description" className="w-full md:w-[80%]" onChange={handleChange} value={formData.description} minLength={500}></textarea>
+      <p className="text-[12px] italic w-full md:w-[80%] flex flex-row justify-between items-center"><span>min characters: 500</span> <span>current characters: {formData.description.length}</span></p>
     </label>
     <label htmlFor="tag">
       <span className="label-span">Tags</span>

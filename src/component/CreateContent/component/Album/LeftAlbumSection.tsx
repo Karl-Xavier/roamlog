@@ -55,7 +55,7 @@ export default function LeftAlbumSection({ setFormData, formData, inputValue, se
         <textarea name="description" id="description" className="w-full md:w-[80%]" onChange={handleInputChange} value={formData.description} maxLength={250}></textarea>
         <p className="text-[12px] italic w-full md:w-[80%] flex flex-row justify-between items-center"><span>max characters: 250</span><span>current characters: {formData.description.length}</span></p>
       </label>
-      <label htmlFor="tag">
+      <label htmlFor="tag" className='mb-[20px]'>
         <span className="label-span">Tags</span>
         <input type="text" className="w-full md:w-[65%]" name="tag" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={handleKeyDown} onBlur={addTagsFromInput}/>
       </label>

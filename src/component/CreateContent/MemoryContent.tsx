@@ -2,8 +2,12 @@ import './css/memorycontent.css'
 import React, { useState } from 'react'
 import RightSection from "./component/Memory/RightSection";
 import LeftSection from "./component/Memory/LeftSection";
+import type { ToastInterface } from '../Auth/component/Register/FormBox';
+import Toast from '../Toast/Toast';
+import { createNewMemory } from '@/service/memoryForm';
+import { ClipLoader } from 'react-spinners';
 
-interface FormData {
+export interface MemoryFormData {
   title: string;
   description: string;
   cover: string | null;
@@ -19,7 +23,7 @@ export default function MemoryContent() {
   const [inputValue, setInputValue] = useState('')
   const [img, setImg] = useState<string | null>(null)
   const [err, setErr] = useState<string | null>(null)
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<MemoryFormData>({
     title: '',
     description: '',
     cover: null,
@@ -29,6 +33,11 @@ export default function MemoryContent() {
     lat: null,
     lon: null,
   })
+  const [toast, setToast] = useState<ToastInterface>({
+    message: null,
+    type: ''
+  })
+  const [loading, setLoading] = useState(false)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target
@@ -143,8 +152,26 @@ export default function MemoryContent() {
     }
   }
 
-  function handleSubmit(e: React.ChangeEvent<HTMLFormElement>){
+  async function handleSubmit(e: React.ChangeEvent<HTMLFormElement>){
     e.preventDefault()
+
+    setLoading(true)
+    const data = await createNewMemory(formData)
+    setLoading(false)
+
+    if(data?.error){
+      setToast({
+        message: data?.error,
+        type: 'error'
+      })
+    }else {
+      setToast({
+        message: data?.message as string,
+        type: 'success'
+      })
+    }
+
+    console.log(formData)
   }
 
   return (
@@ -152,8 +179,9 @@ export default function MemoryContent() {
       <form className="memory-form w-full grid grid-cols-1 lg:grid-cols-[65%_1fr] h-auto gap-4" onSubmit={handleSubmit}>
        <LeftSection handleChange={handleChange} formData={formData} handleKeyDown={handleKeyDown} inputValue={inputValue} setInputValue={setInputValue} addTagsFromInput={addTagsFromInput} addImageBackground={addImageBackground} convertCoverToBase64={convertCoverToBase64} img={img} err={err} setFormData={setFormData}/>
         <RightSection other_images={formData.other_images} handleImageChange={handleImageChange} removeImage={removeImage}/>
-        <button className='w-[220px] h-[44px] uppercase rounded-[10px] bg-[#4c6f59] text-[#eee] cursor-pointer outline-none'>Create</button>
+        <button className='w-[220px] h-[44px] uppercase rounded-[10px] bg-[#4c6f59] text-[#eee] cursor-pointer outline-none' disabled={loading}>{loading ? <span className='text-[16px] normal-case flex flex-row justify-center items-center gap-[4px]'>Creating <ClipLoader color='#eee' size={30}/></span> : 'Create'}</button>
       </form>
+      {toast.message && <Toast message={toast.message} type={toast.type} onClose={() => setToast({ message: null, type: '' })}/>}
     </div>
   )
 }

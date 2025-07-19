@@ -10,8 +10,6 @@ type ToastProp = {
 
 export default function Toast({ message, type, onClose }: ToastProp) {
 
-  console.log(message, type)
-
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose()
