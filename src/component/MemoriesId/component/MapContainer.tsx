@@ -18,15 +18,19 @@ import {
  })
  
  type MapProps = {
-  lat: number;
-  lon: number;
+  lat: number | null;
+  lon: number | null;
  }
 
-export default function MapContain({ lat = 9.0643305, lon = 7.4892974 }: MapProps) {
+export default function MapContain({ lat, lon }: MapProps) {
 
-  console.log(lat, lon)
+  const defaultLat = 9.0643305;
+  const defaultLon = 7.4892974;
 
-  const position: [number, number] = [lat, lon]
+  const latitude = lat ?? defaultLat;
+  const longitude = lon ?? defaultLon;
+
+  const position: [number, number] = [latitude, longitude]
 
   return (
     <MapContainer

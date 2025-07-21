@@ -43,7 +43,7 @@ export default function ProfileComponent() {
       <section className="account-info bg-[#fffff0] w-full p-[20px] rounded-[5px] mb-[10px]">
         <h2 className='mb-[20px] text-[16px] md:text-[22px] font-semibold'>Personal Information</h2>
         <div className="img-name-div w-full md:w-[70%] lg:[50%] flex flex-row items-end gap-[12px]">
-          <img src={user?.profileImage} alt="Profile Image" className='w-[100px] h-[100px] md:w-[170px] md:h-[170px] rounded-[50%]'/>
+          <img src={user?.profileImage} alt="Profile Image" className='w-[100px] h-[100px] md:w-[170px] md:h-[170px] rounded-[50%] object-cover'/>
           <div className="name-others w-full">
             <h2 className='text-[17px] md:text-[22px] font-[600] overflow-ellipsis overflow-hidden whitespace-nowrap md:overflow-none md:whitespace-normal w-[200px] md:w-full'>{user?.firstName} {user?.lastName}</h2>
             <p className="email-add text-[13px] italic">{user?.email}</p>

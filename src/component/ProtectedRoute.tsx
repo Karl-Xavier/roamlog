@@ -1,38 +1,52 @@
-import{ useNavigate } from "react-router-dom";
-import { authContext } from "./Store/authContext";
-import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import LoadingUI from "./LoadingUI"
+import { authContext } from "./Store/authContext" // Zustand store
 
 interface ProtectedRouteProps {
   children: React.ReactNode
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-
-  const { isAuthenticated } = authContext()
+  const user = authContext((state) => state.user) 
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(true)
 
- useEffect(() => {
-  if(!isAuthenticated){
-    navigate('/login', { replace: true })
+  useEffect(() => {
+    if (user === undefined) return
+
+    if (!user) {
+      navigate("/login", { replace: true })
+    } else {
+      setLoading(false)
+    }
+  }, [user, navigate])
+
+  if (loading) {
+    return <LoadingUI />
   }
- }, [isAuthenticated, navigate])
-
- if(!isAuthenticated) return null;
 
   return <>{children}</>
 }
 
 export const PublicRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-
-  const { isAuthenticated } = authContext()
+  const user = authContext((state) => state.user)
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if(isAuthenticated){
-      navigate('/home', { replace: true })
+    if (user === undefined) return
+
+    if (user) {
+      navigate("/home", { replace: true })
+    } else {
+      setLoading(false)
     }
-  }, [isAuthenticated, navigate])
+  }, [user, navigate])
+
+  if (loading) {
+    return <LoadingUI />
+  }
 
   return <>{children}</>
-
 }

@@ -15,6 +15,7 @@ import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'
 import { useEffect, useState } from 'react'
 import Profile from './pages/Profile'
+import NotFound from './component/Not-Found'
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
           <Route path='/memories/:id' element={<MemoriesId/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/profile' element={<Profile/>}/>
+          <Route path='*' element={<NotFound/>}/>
         </Routes>
       </main>
       {!isAuthPage && <Footer/>}

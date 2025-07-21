@@ -42,7 +42,7 @@ export default function Navbar() {
             )})}
             <Link to={'/profile'}>
               <div className='w-[45px] h-[45px] rounded-[50%] bg-[#30382f] border-[#4c6f59] border-[1px]'>
-                <img src={isAuthenticated ? user?.profileImage : avatar} alt="profile picture" className='w-full h-full rounded-[50%]' />
+                <img src={isAuthenticated ? user?.profileImage : avatar} alt="profile picture" className='w-full h-full rounded-[50%] object-cover' />
               </div>
             </Link>
           </ul>

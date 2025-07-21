@@ -20,7 +20,7 @@ export default function HomeContent() {
       try {
         const memoryData = await getDocs(collectionRef)
         
-        setHomeData(memoryData.docs)
+        setHomeData(memoryData.docs.map((doc) => ({...doc.data(), id: doc.id})))
       } catch (err: any) {
         console.log(err)
       }

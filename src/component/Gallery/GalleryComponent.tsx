@@ -15,7 +15,7 @@ export default function GalleryComponent() {
         
         const data = await getDocs(collectionRef)
 
-        setAlbumData(data.docs)
+        setAlbumData(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
 
       } catch (err: any) {
         console.log(err)
