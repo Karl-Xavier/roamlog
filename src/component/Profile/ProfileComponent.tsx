@@ -26,7 +26,7 @@ export default function ProfileComponent() {
         
         const data = await getDocs(queries)
 
-        setMemoriesAlbum(data.docs)
+        setMemoriesAlbum(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
 
       } catch (err: any) {
         console.log(err)
