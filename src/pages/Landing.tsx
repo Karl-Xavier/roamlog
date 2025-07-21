@@ -1,9 +1,12 @@
+import { PublicRoute } from '@/component/ProtectedRoute'
 import LandingContent from '../component/Landing/LandingContent'
 
 export default function Landing() {
   return (
-    <div className='container'>
+   <PublicRoute>
+     <div className='container'>
       <LandingContent/>
     </div>
+   </PublicRoute>
   )
 }

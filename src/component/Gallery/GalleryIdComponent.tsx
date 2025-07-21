@@ -1,21 +1,33 @@
+import { db } from "@/config/firebaseConfig"
 import Head from "@/layout/Head"
-import { albumData, type AlbumDataProps } from "@/utils/albumData"
+import { doc, getDoc, type DocumentData } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 export default function GalleryIdComponent() {
 
   const { id: idParam } = useParams()
+  const navigate = useNavigate()
 
-  const [galleryItem, setGalleryItem] = useState<AlbumDataProps | null>(null)
+  const [galleryItem, setGalleryItem] = useState<DocumentData | null>(null)
 
   useEffect(() => {
 
-    const filteredDocument = albumData.find(album => album.id === Number(idParam))
+    async function getDocument(){
+      const idP  = idParam as string
 
-    setGalleryItem(filteredDocument ?? null)
+      const filteredDocument = doc(db, 'albums', idP)
 
-    console.log(idParam)
+      const document = await getDoc(filteredDocument)
+
+      if(document.exists()){
+        setGalleryItem({ ...document.data(), id: document.id })
+      }else {
+        navigate('/home')
+      }
+    }
+
+    getDocument()
 
   }, [idParam])
 
@@ -26,10 +38,10 @@ export default function GalleryIdComponent() {
         <h2 className="text-[24px] font-bold mb-10px">{galleryItem?.title}</h2>
         <p>{galleryItem?.description}</p>
         <div className="flex w-full flex-row items-center gap-[10px] my-[10px] font-bold text-[13px]">
-          {galleryItem?.tags.slice(0, 4).map(tag => <span>#{tag}</span>)}
+          {galleryItem?.tags.slice(0, 4).map((tag: string) => <span>#{tag}</span>)}
         </div>
         <div className="w-full h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px]">
-          {galleryItem?.album.map((image, index) => (
+          {galleryItem?.album.map((image: string, index: number) => (
             <img src={image} alt={`Travel image ${index+1}`} key={index} loading="lazy"/>
           ))}
         </div>

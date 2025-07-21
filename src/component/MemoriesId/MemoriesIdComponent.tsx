@@ -1,50 +1,52 @@
 import Head from "../../layout/Head";
-import { homeData, type HomeData } from "../../utils/homeData";
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import CarouselContainer from "./component/Carousel";
 import MapContain from "./component/MapContainer";
-
-interface MemoriesProp {
-  cover: '';
-  title: string;
-  id: number | string;
-  description: string;
-  profileURL: string;
-  author: string;
-  tags: string[];
-  other_images: string[]
-  lat: number;
-  lon: number;
-  location: string;
-}
+import { doc, getDoc, type DocumentData } from "firebase/firestore";
+import { db } from "@/config/firebaseConfig";
+import { authContext } from "../Store/authContext";
 
 export default function MemoriesIdComponent() {
 
   const { id: idParam } = useParams()
-  const [memories, setMemories] = useState<MemoriesProp | null | HomeData>(null)
+  const navigate = useNavigate()
+  const { user } = authContext()
+
+  const [memories, setMemories] = useState<DocumentData | null>(null)
 
   useEffect(() => {
-    const filteredDocument = homeData.find(home => home.id === Number(idParam))
 
-    if(!filteredDocument) return
+    async function getDocument(){
+      const idP  = idParam as string
 
-    setMemories(filteredDocument)
+      const filteredDocument = doc(db, 'memories', idP)
+
+      const document = await getDoc(filteredDocument)
+
+      if(document.exists()){
+        setMemories({ ...document.data(), id: document.id })
+      }else {
+        navigate('/home')
+      }
+    }
+
+    getDocument()
   }, [idParam])
 
   return (
     <div className="container px-[20px] md:px-[10%] mb-[40px]">
-      <Head title={`${memories?.title} a memory by ${memories?.author}`} description={memories?.description} image={memories?.cover} keywords={memories?.tags}/>
+      <Head title={`${memories?.title} a memory by ${user?.firstName+' '+user?.lastName}`} description={memories?.description} image={memories?.cover} keywords={memories?.tags}/>
       <section className="w-full h-auto grid grid-cols-1 lg:grid-cols-[60%_1fr] gap-[15px]">
         <div className="main-section w-full">
           <div className="tags flex flex-row items-center gap-[10px] mb-[20px]">
-            {memories?.tags.map((tag, index) => (
+            {memories?.tags.map((tag: string, index: number) => (
               <span className="cursor-pointer font-bold text-[#057948e1] hover:text-[orangered] underline" key={index}>#{tag.toLowerCase()}</span>
             ))}
           </div>
           <div className="memory-header flex flex-col md:flex-row justify-start md:justify-between md:items-center">
             <h2 className="uppercase text-[22px] font-bold">{memories?.title}</h2>
-            <span className="italic font-[12px]">Memory of {memories?.author}</span>
+            <span className="italic font-[12px]">Memory of {user?.firstName} {user?.lastName}</span>
           </div>
           <div className="cover-img-div w-full h-[200px] md:h-[400px] my-[20px]">
             <img src={memories?.cover} alt={`Cover Image for ${memories?.title}`} className="w-full h-full"/>
@@ -55,7 +57,7 @@ export default function MemoriesIdComponent() {
         </div>
         <div className="div map-carousel w-full">
             <div className="map-div w-full h-[300px]">
-              <MapContain lat={9.0643305} lon={7.4892974}/>
+              <MapContain lat={memories?.lat} lon={memories?.lon}/>
             </div>
             <div className="relative w-full mt-[20px]">
               <h2 className="font-bold">Travel Images</h2>

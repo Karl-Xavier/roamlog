@@ -1,9 +1,12 @@
 import RegisterComponent from "@/component/Auth/RegisterComponent";
+import { PublicRoute } from "@/component/ProtectedRoute";
 
 export default function Register() {
   return (
-    <div className="container">
-      <RegisterComponent/>
-    </div>
+    <PublicRoute>
+      <div className="container">
+        <RegisterComponent/>
+      </div>
+    </PublicRoute>
   )
 }

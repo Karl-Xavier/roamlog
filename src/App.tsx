@@ -14,6 +14,7 @@ import GalleryId from './pages/GalleryId'
 import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'
 import { useEffect, useState } from 'react'
+import Profile from './pages/Profile'
 
 function App() {
 
@@ -38,17 +39,18 @@ function App() {
       {!isAuthPage && <Navbar/>}
       <main className='min-h-auto'>
         <Routes>
-          <Route path='/' element={<Landing/>}/>
-          <Route path='/register' element={<Register/>}/>
+          <Route path='/' element={<Landing/>}/> 
+          <Route path='/register' element={<Register/>}/> 
           <Route path='/login' element={<Login/>}/>
           <Route path='/home' element={<Home/>}/>
           <Route path='/gallery' element={<Gallery/>}/>
-          <Route path='/gallery/:id' element={<GalleryId/>}/>
-          <Route path='/new-memories' element={<Create/>}/>
+          <Route path='/gallery/:id' element={<GalleryId/>}/> 
+          <Route path='/new-memories' element={<Create/>}/> 
           <Route path='/new-memories/memory' element={<Memory/>}/>
-          <Route path='/new-memories/album' element={<Album/>}/>
+          <Route path='/new-memories/album' element={<Album/>}/> 
           <Route path='/memories/:id' element={<MemoriesId/>}/>
           <Route path='/about' element={<About/>}/>
+          <Route path='/profile' element={<Profile/>}/>
         </Routes>
       </main>
       {!isAuthPage && <Footer/>}

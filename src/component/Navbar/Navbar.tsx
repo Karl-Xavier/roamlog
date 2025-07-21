@@ -41,14 +41,14 @@ export default function Navbar() {
               </Link>
             )})}
             <Link to={'/profile'}>
-              <div className='w-[45px] h-[45px] rounded-[50%] bg-[#30382f] border-[#4c6f59] border-[2px]'>
+              <div className='w-[45px] h-[45px] rounded-[50%] bg-[#30382f] border-[#4c6f59] border-[1px]'>
                 <img src={isAuthenticated ? user?.profileImage : avatar} alt="profile picture" className='w-full h-full rounded-[50%]' />
               </div>
             </Link>
           </ul>
         </nav>}
         {!isAuthenticated && <Link to='/login' className=' md:w-max'>
-          <button className='text-[20px] font-bold cursor-pointer outline-none uppercase underline'>Login</button>
+          <button className=' font-bold cursor-pointer outline-none uppercase w-[100px] h-[38px] md:h-[40px] rounded bg-[#4c6f59] text-[#eee]'>Login</button>
         </Link>}
       </div>
     </header>

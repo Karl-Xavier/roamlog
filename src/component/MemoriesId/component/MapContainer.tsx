@@ -22,7 +22,7 @@ import {
   lon: number;
  }
 
-export default function MapContain({ lat, lon }: MapProps) {
+export default function MapContain({ lat = 9.0643305, lon = 7.4892974 }: MapProps) {
 
   console.log(lat, lon)
 
